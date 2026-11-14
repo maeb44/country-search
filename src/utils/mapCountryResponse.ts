@@ -1,4 +1,4 @@
-import type { countryResponse } from '../types';
+import type { Country, countryResponse } from '../types';
 
 function isCountryResponse(x: unknown): x is countryResponse[] {
   if (!Array.isArray(x)) return false;
@@ -28,8 +28,8 @@ function isCountryResponse(x: unknown): x is countryResponse[] {
   return true;
 }
 
-export function mapCountryResponse(raw: unknown) {
-  if (!isCountryResponse(raw)) return;
+export function mapCountryResponse(raw: unknown): Country[] {
+  if (!isCountryResponse(raw)) return [];
 
   const countryesData = raw.map((e) => {
     const languages = e.languages.map((e) => e.name);
