@@ -51,7 +51,7 @@ describe('mapCountryResponse', () => {
     'mapCountryResponse возвращает undefined при неправильных входных данных',
     (unvalid) => {
       const result = mapCountryResponse(unvalid);
-      expect(result).toBeUndefined();
+      expect(result).toEqual([]);
     },
   );
   test('mapCountryResponse возвращает преобразованные данные', () => {

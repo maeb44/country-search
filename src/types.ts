@@ -21,6 +21,8 @@ export type Country = {
   population: number;
 };
 
+export type debouceCallback = (query: string, signal: AbortSignal) => void;
+
 type languagesResponse = {
   name: string;
 };
