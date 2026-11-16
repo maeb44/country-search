@@ -3,12 +3,15 @@ export type countryResponse = {
   name: string;
   flags: {
     png: string;
-    // svg: string; возможно использование вместо png
+    // svg: string;
   };
   region: string;
   capital: string;
   languages: languagesResponse[];
   population: number;
+  area: number;
+  borders: string[];
+  currencies: currenciesResponse[];
 };
 
 export type Country = {
@@ -19,10 +22,22 @@ export type Country = {
   capital: string;
   languages: string[];
   population: number;
+  area: number;
+  borders: string[];
+  currencies: string[];
 };
 
-export type debouceCallback = (query: string, signal: AbortSignal) => void;
+export type CachedRecord = {
+  query: string;
+  countries: Country[];
+};
 
 type languagesResponse = {
   name: string;
+};
+
+type currenciesResponse = {
+  code: string;
+  name: string;
+  symbol: string;
 };

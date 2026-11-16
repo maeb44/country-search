@@ -1,5 +1,5 @@
-// import './style.css';
+import './style.css';
 
-const data = await fetch('https://countries.dev/alpha/R2s');
+import { renderApp } from './app';
 
-console.log(data);
+renderApp();
