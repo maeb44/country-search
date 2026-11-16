@@ -13,16 +13,21 @@ const CreateMockResponse = (options: {
     json: options.json ?? (() => Promise.resolve([])),
   } as Response;
 };
-const fetchWithAbort = (_: string, init: any) => {
-  return new Promise((_, reject) => {
+const fetchWithAbort = (_: string, init: RequestInit) => {
+  return new Promise<Response>((_, reject) => {
+    const signal = init.signal;
+    if (!signal) {
+      reject(new Error('signal is required for fetchWithAbort'));
+      return;
+    }
     const rejectWithReason = () => {
-      reject(init.signal.reason ?? new DOMException('Aborted', 'AbortError'));
+      reject(signal.reason ?? new DOMException('Aborted', 'AbortError'));
     };
-    if (init.signal.aborted) {
+    if (signal.aborted) {
       rejectWithReason();
       return;
     }
-    init.signal.addEventListener('abort', rejectWithReason, { once: true });
+    signal.addEventListener('abort', rejectWithReason, { once: true });
   });
 };
 const expectedCountries: Country[] = [
@@ -34,6 +39,24 @@ const expectedCountries: Country[] = [
     capital: 'Moscow',
     languages: ['Russian'],
     population: 144104080,
+    area: 17124442,
+    borders: [
+      'AZE',
+      'BLR',
+      'CHN',
+      'EST',
+      'FIN',
+      'GEO',
+      'KAZ',
+      'PRK',
+      'LVA',
+      'LTU',
+      'MNG',
+      'NOR',
+      'POL',
+      'UKR',
+    ],
+    currencies: ['Russian ruble (₽)'],
   },
   {
     cioc: 'BLR',
@@ -43,6 +66,9 @@ const expectedCountries: Country[] = [
     capital: 'Minsk',
     languages: ['Belarusian', 'Russian'],
     population: 9398861,
+    area: 207600,
+    borders: ['LVA', 'LTU', 'POL', 'RUS', 'UKR'],
+    currencies: ['Belarusian ruble (Br)'],
   },
   {
     cioc: '',
@@ -52,8 +78,12 @@ const expectedCountries: Country[] = [
     capital: '',
     languages: [],
     population: 1000,
+    area: 14000000,
+    borders: [],
+    currencies: [],
   },
 ];
+
 const mockCountries: countryResponse[] = [
   {
     name: 'Russian Federation',
@@ -63,6 +93,24 @@ const mockCountries: countryResponse[] = [
     languages: [{ name: 'Russian' }],
     population: 144104080,
     cioc: 'RUS',
+    area: 17124442,
+    borders: [
+      'AZE',
+      'BLR',
+      'CHN',
+      'EST',
+      'FIN',
+      'GEO',
+      'KAZ',
+      'PRK',
+      'LVA',
+      'LTU',
+      'MNG',
+      'NOR',
+      'POL',
+      'UKR',
+    ],
+    currencies: [{ code: 'RUB', name: 'Russian ruble', symbol: '₽' }],
   },
   {
     name: 'Belarus',
@@ -72,6 +120,9 @@ const mockCountries: countryResponse[] = [
     languages: [{ name: 'Belarusian' }, { name: 'Russian' }],
     population: 9398861,
     cioc: 'BLR',
+    area: 207600,
+    borders: ['LVA', 'LTU', 'POL', 'RUS', 'UKR'],
+    currencies: [{ code: 'BYN', name: 'Belarusian ruble', symbol: 'Br' }],
   },
   {
     name: 'Antarctica',
@@ -81,6 +132,9 @@ const mockCountries: countryResponse[] = [
     languages: [],
     population: 1000,
     cioc: '',
+    area: 14000000,
+    borders: [],
+    currencies: [],
   },
 ];
 
