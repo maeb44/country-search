@@ -7,7 +7,7 @@ export async function searchCountries(query: string, signal: AbortSignal): Promi
     const timeoutSignal = AbortSignal.timeout(5000);
     const combinedSignal = AbortSignal.any([timeoutSignal, signal]);
 
-    const response = await fetch(`https://countries.dev/alpha/${query}`, {
+    const response = await fetch(`https://countries.dev/name/${query}`, {
       signal: combinedSignal,
     });
     if (response.status === 404) {
