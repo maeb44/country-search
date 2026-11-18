@@ -13,10 +13,10 @@ function buildDescription(country: Country): string {
 
   parts.push(`Площадь — ${country.area.toLocaleString('ru-RU')} км².`);
 
-  if (country.borders.length > 0) {
-    parts.push(`Граничит с: ${country.borders.join(', ')}.`);
-  } else {
+  if (!country?.borders) {
     parts.push('Не имеет сухопутных границ.');
+  } else {
+    parts.push(`Граничит с: ${country.borders.join(', ')}.`);
   }
 
   return parts.join(' ');
@@ -80,7 +80,7 @@ export function createDetailModal(country: Country): HTMLDivElement {
     ['Площадь', `${country.area.toLocaleString('ru-RU')} км²`],
     [
       'Границы',
-      country.borders.length > 0 ? country.borders.join(', ') : 'Не имеет сухопутных границ',
+      country.borders?.length > 0 ? country.borders.join(', ') : 'Не имеет сухопутных границ',
     ],
     ['Языки', country.languages.length > 0 ? country.languages.join(', ') : '—'],
     ['Валюта', country.currencies.length > 0 ? country.currencies.join(', ') : '—'],
