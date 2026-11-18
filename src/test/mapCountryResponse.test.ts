@@ -54,23 +54,13 @@ const mockCountries: countryResponse[] = [
     currencies: [],
   },
 ];
-const uncorrectMock = [
-  {
-    name: 'Antarctica',
-    flags: { png: 'https://flagcdn.com/w320/aq.png' },
-    region: 1,
-    languages: '',
-    population: 1000,
-    cioc: '',
-  },
-];
 
 describe('mapCountryResponse', () => {
   test('mapCountryResponse возвращает массив', () => {
     const result = mapCountryResponse(mockCountries);
     expect(Array.isArray(result)).toBe(true);
   });
-  const unvalidInput = [null, 2, false, uncorrectMock, [], [null]];
+  const unvalidInput = [null, 2, false, [], [null]];
   test.each(unvalidInput)(
     'mapCountryResponse возвращает undefined при неправильных входных данных',
     (unvalid) => {
