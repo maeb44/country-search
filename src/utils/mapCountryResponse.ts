@@ -13,13 +13,12 @@ function isCountryResponse(x: unknown): x is countryResponse[] {
 
 export function mapCountryResponse(raw: unknown): Country[] {
   if (!isCountryResponse(raw)) {
-    console.log(1);
     return [];
   }
-  return raw.map((e) => {
-    const languages = e.languages.map((lang) => lang.name);
-    const currencies = e.currencies.map((c) => `${c.name} (${c.symbol})`);
 
+  return raw.map((e) => {
+    const languages = e.languages?.map((lang) => lang.name) || ['none'];
+    const currencies = e.currencies?.map((c) => `${c.name} (${c.symbol})`) || ['none'];
     return {
       cioc: e.cioc,
       capital: e.capital,
@@ -29,7 +28,7 @@ export function mapCountryResponse(raw: unknown): Country[] {
       languages,
       population: e.population,
       area: e.area,
-      borders: e.borders,
+      borders: e.borders || [],
       currencies,
     };
   });
