@@ -102,6 +102,7 @@ export function renderApp(): void {
         showError(`Ошибка сервера: ${err.status}. Попробуйте ещё раз.`);
         return;
       }
+      console.log(err);
       showError('Не удалось загрузить данные. Попробуйте ещё раз.');
     }
   };
